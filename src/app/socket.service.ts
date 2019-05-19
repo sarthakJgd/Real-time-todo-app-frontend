@@ -8,7 +8,8 @@ import { Observable, observable } from "rxjs";
   providedIn: "root"
 })
 export class SocketService {
-  private baseUrl = "http://localhost:3000";
+  private baseUrl = "http://RealTimeTodoApp-env.qqmk7cimzg.us-east-2.elasticbeanstalk.com"; 
+  //"http://localhost:3000";
   private socket; 
   constructor(private http: HttpClient) {
     this.socket = io(this.baseUrl);

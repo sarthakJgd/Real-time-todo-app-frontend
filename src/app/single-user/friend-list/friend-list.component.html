@@ -45,7 +45,7 @@
     <h5>Friends</h5>
     <hr>
   </div>
-  <div *ngIf="friendListLength !== 0">
+  <div *ngIf="friendsListLength !== 0">
     <div class="row">
       <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let friend of friendList | paginate: { itemsPerPage: 3, currentPage: p2, id: 'second' }">
         <div class="panel panel-default userlist" style="background-color: white">

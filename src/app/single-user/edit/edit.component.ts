@@ -40,7 +40,7 @@ export class EditComponent implements OnInit {
   public authorId: any;
   public showCompletedTodoList: any = false;
   public todo: any;
-  private myTodoId: String;
+  public myTodoId: String;
   private mode = 'create';
   public task: String;
   editedBy: any;
@@ -144,7 +144,7 @@ export class EditComponent implements OnInit {
 
   } // end checkStatus
 
-  public onSubmit(todoForm: NgForm,todoId:Event) {
+  public onSubmit(todoForm: NgForm,todoId) {
     let currentDate = new Date();
     /* console.log(this.statusSelected); */
     let todoData = {

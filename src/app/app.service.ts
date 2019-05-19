@@ -15,7 +15,9 @@ import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 })
 export class AppService {
 
-  private url = "http://localhost:3000";
+  private url =  "http://RealTimeTodoApp-env.qqmk7cimzg.us-east-2.elasticbeanstalk.com";
+  //"http://localhost:3000";
+  
   private authToken: any;
   constructor(public http: HttpClient, public cookie: CookieService, ) {
   }
@@ -78,7 +80,7 @@ export class AppService {
   public getAllUsers(): Observable<any> {
     this.authToken = this.cookie.get('authtoken');
     let myResponse = this.http.get(this.url + '/api/v1/users/view/all' + '?authToken=' + this.authToken);
-    console.log(myResponse);
+   /*  console.log(myResponse); */
     return myResponse;
   }
 
@@ -93,14 +95,14 @@ export class AppService {
     this.authToken = this.cookie.get('authtoken');
 
     let myResponse = this.http.put(this.url + '/api/v1/users/sendFriendRequest' + '?authToken=' + this.authToken, params);
-    console.log(myResponse);
+   /*  console.log(myResponse); */
     return myResponse;
   }
 
   public getSingleUserInformation(userId): Observable<any> {
     this.authToken = this.cookie.get('authtoken');
     let theResponse = this.http.get(this.url + '/api/v1/users/' + userId + '/details?authToken=' + this.authToken);
-    console.log("Single Todo Response:" + theResponse);
+   /*  console.log("Single Todo Response:" + theResponse); */
     return theResponse;
   }
 
@@ -115,7 +117,7 @@ export class AppService {
     this.authToken = this.cookie.get('authtoken');
 
     let myResponse = this.http.put(this.url + '/api/v1/users/acceptFriendRequest' + '?authToken=' + this.authToken, params);
-    console.log(myResponse);
+    /* console.log(myResponse); */
     return myResponse;
   }
 
@@ -130,7 +132,7 @@ export class AppService {
     this.authToken = this.cookie.get('authtoken');
 
     let myResponse = this.http.put(this.url + '/api/v1/users/rejectFriendRequest' + '?authToken=' + this.authToken, params);
-    console.log(myResponse);
+   /*  console.log(myResponse); */
     return myResponse;
   }
 }
