@@ -1,0 +1,76 @@
+  <app-header></app-header>
+  <div class="container">
+      <div style="display: block"></div>
+      
+    <form #todoForm="ngForm" (ngSubmit)="onSubmit(todoForm,myTodoId)" novalidate>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Title" name="title" onkeypress="return noenter()" [(ngModel)]="title" required>
+        <mat-icon matSuffix>title</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <textarea matInput placeholder="Enter description.." name="description" rows=5 [(ngModel)]="description"></textarea>
+      </mat-form-field>
+
+      <!-- <mat-form-field class="example-full-width">
+        <input matInput [min]="minDate" [matDatepicker]="picker" placeholder="Choose due date" name="todoDate"
+          onkeypress="return noenter()" [(ngModel)]="todoDate">
+        <mat-datepicker-toggle matSuffix [for]="picker">
+          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field> -->
+
+      <mat-form-field class="example-full-width">
+          <input matInput [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Set due date and time.." name="todoDate"
+            onkeypress="return noenter()" [(ngModel)]="todoDate">
+          <owl-date-time #dt1></owl-date-time>
+          <mat-icon matSuffix>calendar_today</mat-icon>
+        </mat-form-field> 
+
+       <!-- <mat-form-field class="example-full-width">
+        <input matInput [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Remind me" name="reminderTime"
+          onkeypress="return noenter()" [(ngModel)]="reminderTime">
+        <owl-date-time #dt1></owl-date-time>
+        <mat-icon matSuffix>calendar_today</mat-icon>
+      </mat-form-field> --> 
+
+
+
+
+      <div *ngIf="subtasks">
+      <div class="form-check" *ngFor="let subtask of subtasks; let i =index" >
+          <input class="form-check-input" type="checkbox" value="" [(ngModel)]="subtask.taskValue" 
+          (click)="checkboxClicked(i);" name="subtaskValue" id="defaultCheck1" [ngClass]="{strikethrough:(subtask.taskValue == true)}">
+          <label class="form-check-label example-90-width" for="defaultCheck1" [ngClass]="{strikethrough:(subtask.taskValue == true)}">
+              {{subtask.name}}
+          </label>
+          <mat-icon matSuffix (click)=deleteSubtask(i)>cancel</mat-icon>
+        </div>
+      </div>
+
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Add a subtask by pressing enter" (keydown)="enterUsingKeypress($event)" onkeypress="return noenter()"
+          name="task" [(ngModel)]="task">
+        <mat-icon matSuffix>add</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Select an option</mat-label>
+        <mat-select [(ngModel)]="statusSelected" name="statusSelected">
+
+          <mat-option *ngFor="let stat of statuses" [value]="stat">{{stat}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- <mat-form-field class="example-full-width">
+        <input matInput placeholder="Add a comment" name="comment" onkeypress="return noenter()" [(ngModel)]="comment">
+        <mat-icon matSuffix>create</mat-icon>
+      </mat-form-field> -->
+
+      <button type="submit" mat-raised-button color="primary" class="example-half-width"
+        [disabled]="!todoForm.form.valid">Submit</button>
+
+
+    </form>
+  </div>

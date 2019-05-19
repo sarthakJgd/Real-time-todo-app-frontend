@@ -1,0 +1,149 @@
+<app-header></app-header>
+<div class="container">
+
+
+
+  <div style="text-align: center">
+    <h5>Received Requests</h5>
+    <hr>
+  </div>
+  <div *ngIf="receivedRequestsLength !== 0">
+    <div class="row">
+      <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let request of receivedRequests | paginate: { itemsPerPage: 3, currentPage: p1, id: 'first' }">
+        <div class="panel panel-default userlist" style="background-color: white">
+          <div class="panel-body text-center">
+            <div class="userprofile">
+              <div class="userpic"> <img src="./../../../assets/images/download.jpg" alt="" class="userpicimg"> </div>
+              <h3 class="username" style="padding:5px">{{request.userName}}</h3>
+            </div>
+
+            <!-- <p><a href="mailto:{{user.email}}">{{user.email}}</a> | +{{user.countryCode}} {{user.mobileNumber}} </p> -->
+            <button type="button" class="btn btn-warning"
+              style="background-color:#3B53B9;color:white;margin-bottom:15px"
+              (click)="acceptFriendRequest(request.userId, request.userName)">
+              <mat-icon style="vertical-align: text-bottom;margin: 0 2px">done_all</mat-icon> Accept
+            </button>
+            <button type="button" class="btn btn-outline-dark" style="color: black;margin-bottom:15px"
+              (click)="rejectFriendRequest(request.userId, request.userName)">
+              <mat-icon style="vertical-align: text-bottom;margin: 0 2px">delete</mat-icon> Reject
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <pagination-controls (pageChange)="p1 = $event" id="first"></pagination-controls>
+  </div>
+  <div *ngIf="receivedRequestsLength === 0">
+    <h5>No friend requests pending approval.</h5>
+    <br>
+  </div>
+
+
+  <div style="text-align: center">
+    <h5>Friends</h5>
+    <hr>
+  </div>
+  <div *ngIf="friendListLength !== 0">
+    <div class="row">
+      <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let friend of friendList | paginate: { itemsPerPage: 3, currentPage: p2, id: 'second' }">
+        <div class="panel panel-default userlist" style="background-color: white">
+          <div class="panel-body text-center">
+            <div class="userprofile">
+              <div class="userpic"> <img src="./../../../assets/images/download.jpg" alt="" class="userpicimg"> </div>
+              <h3 class="username" style="padding:5px">{{friend.friendName}}</h3>
+            </div>
+
+            <!-- <p><a href="mailto:{{user.email}}">{{user.email}}</a> | +{{user.countryCode}} {{user.mobileNumber}} </p> -->
+            <button type="button" class="btn" style="background-color:#3B53B9;color:white;margin-bottom:15px">
+              <mat-icon style="vertical-align: text-bottom;margin: 0 2px">check</mat-icon> Friends
+            </button>
+            <!-- <button type="button" class="btn btn-outline-dark" style="color:black;margin-bottom:15px"
+            (click)="removeFriend()">
+              <mat-icon style="vertical-align: text-bottom;margin: 0 2px">delete</mat-icon> Remove
+            </button> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <pagination-controls (pageChange)="p2 = $event" id="second"></pagination-controls>
+  </div>
+  <div *ngIf="friendsListLength === 0">
+    <h5>No friends added yet.</h5>
+    <br>
+  </div>
+
+
+
+  <div style="text-align: center">
+    <h5>Sent Requests</h5>
+    <hr>
+  </div>
+  <div *ngIf="sentRequestsLength !== 0">
+    <div class="row">
+      <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let request of sentRequests | paginate: { itemsPerPage: 3, currentPage: p3, id: 'third' }">
+        <div class="panel panel-default userlist" style="background-color: white">
+          <div class="panel-body text-center">
+            <div class="userprofile">
+              <div class="userpic"> <img src="./../../../assets/images/download.jpg" alt="" class="userpicimg"> </div>
+              <h3 class="username" style="padding:5px">{{request.userName}}</h3>
+            </div>
+
+            <!-- <p><a href="mailto:{{user.email}}">{{user.email}}</a> | +{{user.countryCode}} {{user.mobileNumber}} </p> -->
+            <button type="button" class="btn btn-warning" style="color:white;margin-bottom:15px">
+              <mat-icon style="vertical-align: text-bottom;margin: 0 2px">error</mat-icon> Request Pending
+            </button>
+            <button type="button" class="btn btn-outline-dark" style="color:black;margin-bottom:15px"
+              (click)="deletePendingFriendRequest(request.userId, request.userName)">
+              <mat-icon style="vertical-align: text-bottom;margin: 0 2px">delete</mat-icon> Delete
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <pagination-controls (pageChange)="p3 = $event" id="third"></pagination-controls>
+  </div>
+  <div *ngIf="sentRequestsLength === 0">
+    <h5>No friend requests pending.</h5>
+    <br>
+  </div>
+
+
+  <div *ngIf="allUsers">
+    <div style="text-align: center">
+      <h5>All Other Users</h5>
+      <hr>
+    </div>
+    <div *ngIf="allUsersLength !== 0">
+    <div class="row">
+      <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let user of allUsers | paginate: { itemsPerPage: 3, currentPage: p4, id: 'fourth' }">
+        <div class="panel panel-default userlist" style="background-color: white">
+          <div class="panel-body text-center">
+            <div class="userprofile">
+              <div class="userpic"> <img src="./../../../assets/images/download.jpg" alt="" class="userpicimg"> </div>
+              <h3 class="username" style="padding:5px">{{user.firstName}} {{user.lastName}}</h3>
+            </div>
+
+            <!-- <p><a href="mailto:{{user.email}}">{{user.email}}</a> | +{{user.countryCode}} {{user.mobileNumber}} </p> -->
+            <button type="button" class="btn" style="background-color:#3B53B9;color:white;margin-bottom:15px"
+              (click)="sendFriendRequest(user.userId,user.firstName+ ' '+ user.lastName)">
+              <mat-icon style="vertical-align: text-bottom;margin: 0 2px">group_add</mat-icon> Add friend
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div *ngIf="allUsersLength === 0">
+      <h5>No other users found.</h5>
+      <br>
+    </div>
+    
+    <pagination-controls (pageChange)="p4 = $event" id="fourth"></pagination-controls>
+  </div>
+</div>

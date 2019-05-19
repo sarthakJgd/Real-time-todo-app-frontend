@@ -1,0 +1,53 @@
+
+  <app-header></app-header>
+  <div class="container" (keydown)="onKeyPress($event)">
+    <div class="row" *ngIf="currentTodo">
+      <div class="col-md-12">
+          <div class="float-right">
+              <button class="btn btn-outline-secondary" (click)="goBackToPreviousPage()">
+                <mat-icon>keyboard_backspace</mat-icon>
+            </button>
+              <button class="btn btn-outline-secondary" [routerLink]="['../../edit',currentTodo.todoId]">
+                  <mat-icon>edit</mat-icon>
+              </button>
+              
+              <button class="btn btn-outline-secondary" (click)="deleteTodo(currentTodo.todoId)">
+                  <mat-icon>delete</mat-icon>
+              </button>
+              
+            </div>
+        <h2 *ngIf="currentTodo.title">{{currentTodo.title}}</h2>
+        <p *ngIf="currentTodo.todoDate">
+          Due Date {{currentTodo.todoDate | date}}
+        </p>
+        <hr>
+        <h5>Created By:</h5>
+        <p>{{currentTodo.createdBy.userName}}</p>
+        <h5>Description:</h5>
+        <p *ngIf="currentTodo.description">{{currentTodo.description}}</p>
+        <!-- <p *ngIf="currentTodo.subtasks!= undefined && currentTodo.subtasks.length>0">Subtasks : <span
+            *ngFor="let tag of currentTodo.subtasks;let first=first;let last=last">{{tag}}{{last ? '' : ', '}}</span></p>
+        -->
+        <hr>
+        <h5>Subtasks:</h5>
+        <div *ngIf="currentTodo.subtasks">
+          <ul class="form-check" *ngFor="let subtask of currentTodo.subtasks; let i =index">
+            <!-- <input class="form-check-input" type="checkbox" value="" [(ngModel)]="subtask.taskValue"
+              (click)="checkboxClicked(i);" name="subtaskValue" id="defaultCheck1"
+              [ngClass]="{strikethrough:(subtask.taskValue == true)}"> -->
+            <li>
+              <span [ngClass]="{strikethrough:(subtask.taskValue == true)}">
+                {{subtask.name}}
+              </span>
+            </li>
+          </ul>
+        </div>
+        <hr>
+        <h5>Status :</h5>
+        <h6 *ngIf="currentTodo.statusSelected"> "{{currentTodo.statusSelected}}"</h6>
+      </div>
+    </div>
+    <hr>
+    <button type="submit" class="btn btn-primary" style="margin-bottom: 2%;background-color:#3B53B9;color:white"
+     (click)="undoTodoState(currentTodo.todoId)">Undo previous changes</button>
+  </div>

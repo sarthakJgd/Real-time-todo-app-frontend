@@ -1,0 +1,41 @@
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 98%;
+  }
+  
+  .example-half-width {
+    width: 48%;
+  }
+  
+  .example-90-width {
+    width: 95%;
+  }
+  
+  .strikethrough{
+    text-decoration:line-through;
+    opacity: 0.5;
+  }
+  
+  .example-headers-align .mat-expansion-panel-header-title,
+  .example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+  }
+  
+  .example-headers-align .mat-expansion-panel-header-description{
+  justify-content: space-between;
+  align-items: center;
+  }
+  
+  .mat-icon{
+  color: grey;
+  }
+  
+  .mat-form-field {
+  margin-right: 12px;
+  }
+  

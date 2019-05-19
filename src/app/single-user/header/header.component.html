@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-lg navbar-dark nav-css" style="margin-bottom:2%; background-color: #3B53B9;position:sticky">
+  <mat-icon style="color:white" (click)="goToSingleTodos();">check_box</mat-icon>
+  <a class="navbar-brand" href="#" (click)="goToSingleTodos();">Todo</a>
+  <button class="navbar-toggler" type="button" (click)="goToSingleTodos();" data-toggle="collapse"
+    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+    aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <form class="form-inline my-4 my-lg-0 mr-auto">
+    </form>
+
+
+    <ul class="navbar-nav" style="border-right:1px dotted gray">
+      <li class="nav-item name-container" (click)="goToSingleTodos();">
+        <mat-icon style="display: inline-block; margin-bottom: 4px; vertical-align: middle; color: white">
+          account_circle</mat-icon>
+        <a class="nav-link" style="display:inline-block; color: white">{{userName}}</a>
+      </li>
+      <li class="nav-item" style="margin:0 2px">
+        <a class="nav-link" (click)="goToSingleTodos();">My Todos</a>
+      </li>
+      <li class="nav-item" style="margin:0 2px">
+        <a class="nav-link" (click)="goToSharedTodos()">Friends Todos</a>
+      </li>
+      <li class="nav-item" style="margin:0 2px">
+        <a class="nav-link" (click)="goToFriendsList()">Friends</a>
+      </li>
+    </ul>
+
+    <mat-icon style="margin:0 15px" *ngIf ="receivedRequestsLength === 0"
+      (click)=goToFriendsList()>people</mat-icon>
+    <mat-icon style="margin:0 15px" *ngIf ="receivedRequestsLength !== 0" [matBadge]="receivedRequestsLength" matBadgeColor="warn"
+      (click)=goToFriendsList()>people</mat-icon>
+<!-- 
+    <mat-icon style="color:white;margin:0 15px">notifications</mat-icon> -->
+
+    <mat-icon class="" style="margin:0 15px" (click)="logout()">power_settings_new</mat-icon>
+
+
+
+
+
+  </div>
+</nav>

@@ -1,0 +1,33 @@
+<app-user-header></app-user-header>
+  <div class="row p-0 m-0">
+  
+    <div class="col-sm"></div>
+  
+    <div class="col-sm p-5">
+  
+      <h2 class="form-signin-heading">Sign in</h2>
+  
+      <label for="inputEmail" class="sr-only">Email address</label>
+  
+      <input type="email" id="inputEmail" class="form-control" [(ngModel)]="email" placeholder="Email address" required autofocus>
+  
+      <br>
+  
+      <label for="inputPassword" class="sr-only">Password</label>
+  
+      <input type="password" id="inputPassword" class="form-control" [(ngModel)]="password" placeholder="Password" required>
+  
+      <br>
+  
+      <button class="btn btn-lg btn-block" style="background-color: #3B53B9;color:white"  type="button" (click)="signinFunction()">Sign in</button>
+
+      <button type="button" class="btn btn-link" style="color:#3B53B9" (click)="goToForgotPassword()">Forgot your Password?</button>
+      <br>
+      <button type="button" class="btn btn-link" style="color:#3B53B9" (click)="goToSignUp()">Dont have an account yet?</button>
+  
+    </div>
+  
+    <div class="col-sm"></div>
+  
+  </div>
+  
