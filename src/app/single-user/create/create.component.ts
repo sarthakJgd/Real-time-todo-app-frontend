@@ -164,7 +164,7 @@ export class CreateComponent implements OnInit {
           /* console.log(data); */
           setTimeout(() => {
             this.getTodosByCreatedId();
-          }, 100);
+          }, 1);
         },
         error => {
           this.toastr.error("Error in posting todo");
@@ -201,7 +201,7 @@ export class CreateComponent implements OnInit {
        /*  console.log(data); */
         setTimeout(() => {
           this.getTodosByCreatedId();
-        }, 100);
+        }, 1);
       },
       error => {
         this.toastr.error("Error in posting todo");
@@ -212,7 +212,7 @@ export class CreateComponent implements OnInit {
     setTimeout(() => {
       this.getTodosByCreatedId();
 
-    }, 100);
+    }, 1);
   }
 
   public markOpen(todoId, todoTitle) {
@@ -241,7 +241,7 @@ export class CreateComponent implements OnInit {
         setTimeout(() => {
           this.getTodosByCreatedId();
 
-        }, 100);
+        }, 1);
       },
       error => {
         this.toastr.error("Error in posting todo");
@@ -268,7 +268,7 @@ export class CreateComponent implements OnInit {
         setTimeout(() => {
           this.getTodosByCreatedId();
 
-        }, 1000);
+        }, 1);
       },
       error => {
         this.toastr.error("Error in deleting todo");

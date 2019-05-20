@@ -15,6 +15,7 @@ import { ErrorComponent } from '../error/error.component';
 export class FriendListComponent implements OnInit {
   
   allUsers: any = [];
+  allUsersTotal: any = [];
   userId: any;
   userName: any;
   authToken: any;
@@ -36,6 +37,10 @@ export class FriendListComponent implements OnInit {
   p2: number = 1;
   p3: number = 1;
   p4: number = 1;
+  allUsersTotal1: any = [];
+  allUsersTotal2: any = [];
+  allUsersTotal3: any = [];
+  allUsersTotal4: any = [];
 
   constructor(private cookie: CookieService,
     private router: Router,
@@ -147,49 +152,59 @@ export class FriendListComponent implements OnInit {
     this.appService.getAllUsers().subscribe(
       data => {
         /* console.log(data); */
-        this.allUsers = data.data;
+        this.allUsersTotal = data.data;
+        console.log("allusers"+this.allUsersTotal);
         /* console.log('all users', this.allUsers) */
 
-        if (this.allUsers && this.allUsers.length != 0) {
+        if (this.allUsersTotal && this.allUsersTotal.length != 0) {
           if (this.currentUserId && this.currentUserId.length != 0) {
             for (let i of this.currentUserId) {
-              this.allUsers = this.allUsers.filter((values) => values.userId !== i)
+              this.allUsersTotal1 = this.allUsersTotal.filter((values) => values.userId !== i)
               /* console.log('users', this.allUsers); */
 
             }
           }
+          console.log("alluserstotal "+this.allUsersTotal);
         }
+        
 
-        if (this.allUsers && this.allUsers.length != 0) {
+        if (this.allUsersTotal1 && this.allUsersTotal1.length != 0) {
           if (this.sentRequestIds && this.sentRequestIds.length != 0) {
             for (let i of this.sentRequestIds) {
-              this.allUsers = this.allUsers.filter((values) => values.userId !== i)
+              this.allUsersTotal2 = this.allUsersTotal1.filter((values) => values.userId !== i)
               /* console.log('users', this.allUsers);
  */
             }
           }
+          console.log("alluserstotal "+this.allUsersTotal);
         }
 
-        if (this.allUsers && this.allUsers.length != 0) {
+        if (this.allUsersTotal2 && this.allUsersTotal2.length != 0) {
           if (this.receivedRequestIds && this.receivedRequestIds.length != 0) {
             for (let i of this.receivedRequestIds) {
-              this.allUsers = this.allUsers.filter((values) => values.userId !== i)
+              this.allUsersTotal3 = this.allUsersTotal2.filter((values) => values.userId !== i)
               /* console.log('users', this.allUsers);
  */
             }
           }
+          console.log("alluserstotal "+this.allUsersTotal);
         }
 
-        if (this.allUsers && this.allUsers.length != 0) {
+        if (this.allUsersTotal3 && this.allUsersTotal3.length != 0) {
           if (this.friendListIds && this.friendListIds.length != 0) {
             for (let i of this.friendListIds) {
-              this.allUsers = this.allUsers.filter((values) => values.userId !== i)
+              this.allUsersTotal4 = this.allUsersTotal3.filter((values) => values.userId !== i)
               /* console.log('users', this.allUsers); */
-
+              
             }
           }
+          console.log("alluserstotal "+this.allUsersTotal);
         }
 
+       if(this.allUsersTotal4){
+        this.allUsers = this.allUsersTotal4;
+       }
+        
         this.allUsersLength = this.allUsers.length;
        /*  console.log('all users length'+this.allUsersLength) */
       },
@@ -269,7 +284,7 @@ export class FriendListComponent implements OnInit {
     this.appService.rejectFriendRequest(friendRequest).subscribe((apiResponse) => {
       if (apiResponse.status === 200) {
         /* console.log(apiResponse); */
-        this.toastr.success("Friend Request rejected!");
+        this.toastr.success("Friend Request deleted");
         this.getSingleUserInformation();
         this.getAllUser();
       } else {

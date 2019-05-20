@@ -185,7 +185,7 @@ export class EditComponent implements OnInit {
     todoForm.reset();
     setTimeout(() => {
       this.router.navigate(["single-user/todo"])
-    }, 100);
+    }, 1000);
   }
 
   public enterUsingKeypress: any = (event: any) => {
