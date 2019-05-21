@@ -153,59 +153,74 @@ export class FriendListComponent implements OnInit {
       data => {
         /* console.log(data); */
         this.allUsersTotal = data.data;
-        console.log("allusers"+this.allUsersTotal);
+        /* 
+        console.log("allusers"+this.allUsersTotal); */
         /* console.log('all users', this.allUsers) */
 
-        if (this.allUsersTotal && this.allUsersTotal.length != 0) {
-          if (this.currentUserId && this.currentUserId.length != 0) {
+        if (this.allUsersTotal && this.allUsersTotal.length !== 0) {
+          if (this.currentUserId && this.currentUserId.length !== 0) {
             for (let i of this.currentUserId) {
               this.allUsersTotal1 = this.allUsersTotal.filter((values) => values.userId !== i)
               /* console.log('users', this.allUsers); */
 
             }
           }
-          console.log("alluserstotal "+this.allUsersTotal);
+          else{
+            this.allUsersTotal1 = this.allUsersTotal;
+          }
+          /* console.log("alluserstotal 1"+this.allUsersTotal1); */
         }
         
 
-        if (this.allUsersTotal1 && this.allUsersTotal1.length != 0) {
-          if (this.sentRequestIds && this.sentRequestIds.length != 0) {
+        if (this.allUsersTotal1 && this.allUsersTotal1.length !== 0) {
+          if (this.sentRequestIds && this.sentRequestIds.length !== 0) {
             for (let i of this.sentRequestIds) {
               this.allUsersTotal2 = this.allUsersTotal1.filter((values) => values.userId !== i)
               /* console.log('users', this.allUsers);
  */
             }
           }
-          console.log("alluserstotal "+this.allUsersTotal);
+          else{
+            this.allUsersTotal2 = this.allUsersTotal1;
+          }
+          /* console.log("alluserstotal 2"+this.allUsersTotal2); */
         }
 
-        if (this.allUsersTotal2 && this.allUsersTotal2.length != 0) {
-          if (this.receivedRequestIds && this.receivedRequestIds.length != 0) {
+        if (this.allUsersTotal2 && this.allUsersTotal2.length !== 0) {
+          if (this.receivedRequestIds && this.receivedRequestIds.length !== 0) {
             for (let i of this.receivedRequestIds) {
               this.allUsersTotal3 = this.allUsersTotal2.filter((values) => values.userId !== i)
               /* console.log('users', this.allUsers);
  */
             }
           }
-          console.log("alluserstotal "+this.allUsersTotal);
+          else{
+            this.allUsersTotal3 = this.allUsersTotal2;
+          }/* 
+          console.log("alluserstotal 3"+this.allUsersTotal3); */
         }
 
-        if (this.allUsersTotal3 && this.allUsersTotal3.length != 0) {
-          if (this.friendListIds && this.friendListIds.length != 0) {
+        if (this.allUsersTotal3 && this.allUsersTotal3.length !== 0) {
+          if (this.friendListIds && this.friendListIds.length !== 0) {
             for (let i of this.friendListIds) {
               this.allUsersTotal4 = this.allUsersTotal3.filter((values) => values.userId !== i)
               /* console.log('users', this.allUsers); */
               
             }
           }
-          console.log("alluserstotal "+this.allUsersTotal);
+          else{
+            this.allUsersTotal4 = this.allUsersTotal3;
+          }
+          /* console.log("alluserstotal 4"+this.allUsersTotal4); */
         }
 
-       if(this.allUsersTotal4){
+       if(this.allUsersTotal4 && this.allUsersTotal4.length !== 0){
         this.allUsers = this.allUsersTotal4;
+        /* console.log("allusers"+this.allUsers); */
+        this.allUsersLength = this.allUsers.length;
        }
         
-        this.allUsersLength = this.allUsers.length;
+        
        /*  console.log('all users length'+this.allUsersLength) */
       },
       err => {
