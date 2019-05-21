@@ -41,18 +41,18 @@ export class LoginComponent implements OnInit {
         this.appService.signInFunction(data).subscribe(
           data =>{
             
-           /*  console.log(data); */
+           
             this.cookieService.set('authtoken', data.data.authToken);
             
             this.cookieService.set('userId', data.data.userDetails.userId);
             
             this.cookieService.set('userName', data.data.userDetails.firstName + ' ' + data.data.userDetails.lastName);
           
-            //this.appService.setUserInfoInLocalStorage(apiResponse.data.userDetails);
+            
             this.toastr.success("Login Successful!")
-            /* console.log("navigating to todo"); */
+            
             this.router.navigate(['single-user/todo']);     
-            /* console.log("navigated to todo");  */
+           
           },
           err=>{
             this.toastr.error(err.error.message);

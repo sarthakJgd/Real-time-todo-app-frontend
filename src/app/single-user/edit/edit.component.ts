@@ -64,16 +64,16 @@ export class EditComponent implements OnInit {
       userName: this.cookie.get('userName')
     }
     this._route.paramMap.subscribe((param: ParamMap) => {
-      console.log(param);
+      
       if (param.has('id')) {
         this.myTodoId = param.get('id');
-        console.log("The todoId is:" + this.myTodoId);
+        
         this.todoHttpService.getSingleTodoInformation(this.myTodoId).subscribe(
 
           data => {
-            console.log(data);
+            
             this.todo = data.data;
-            console.log("title", this.todo.title);
+            
             if (this.todo.title) {
               this.title = this.todo.title;
             } else {
@@ -119,8 +119,6 @@ export class EditComponent implements OnInit {
             }
           },
           error => {
-            console.log("Some error occured");
-            console.log(error.message);
             this.router.navigate(["page-not-found"]);
           }
         );
@@ -146,7 +144,7 @@ export class EditComponent implements OnInit {
 
   public onSubmit(todoForm: NgForm,todoId) {
     let currentDate = new Date();
-    /* console.log(this.statusSelected); */
+    
     let todoData = {
       title: this.title,
       description: this.description,
@@ -159,7 +157,7 @@ export class EditComponent implements OnInit {
       editedBy: this.editedBy,
       canDelete: true
     }
-    /* console.log("Todo Data: " + todoData); */
+    
     this.todoHttpService.editTodo(this.myTodoId, todoData).subscribe(
 
       data => {
@@ -172,14 +170,12 @@ export class EditComponent implements OnInit {
               verticalPosition: "top"
             });
           })
-        //this.toastr.success(data.message);
-      /*   console.log(data); */
         this.todo = data.data;
-       /*  console.log("edit todo response" + data.data); */
+       
       },
       error => {
         this.toastr.error("Some error occured while editing");
-     /*    console.log(error.message); */
+     
       }
     );
     todoForm.reset();
@@ -199,19 +195,14 @@ export class EditComponent implements OnInit {
           name: this.task,
         }
         this.subtasks.push(this.subtask);
-       /*  console.log(this.subtasks); */
+       
         this.task = "";
       }
     }
   }
 
   public checkboxClicked(index) {
-    /* for (let i = 0; i < this.subtasks.length; i++) {
-      if (i == index) {
-        this.subtasks[i].taskValue = !this.subtasks[i].taskValue;
-      }
-    } */
-  /*   console.log(this.subtasks); */
+    
   }
 
   public deleteSubtask(index){

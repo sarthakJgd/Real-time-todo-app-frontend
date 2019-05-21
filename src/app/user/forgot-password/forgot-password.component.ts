@@ -25,7 +25,7 @@ export class ForgotPasswordComponent implements OnInit {
       this.appService.forgotPasswordSendMail(this.forgotPasswordEmail)
         .subscribe(
           apiResponse => {
-           /*  console.log(apiResponse); */
+           
 
             if (apiResponse.status === 200) {
               this.toastr.success("Password Reset Email has been sent");

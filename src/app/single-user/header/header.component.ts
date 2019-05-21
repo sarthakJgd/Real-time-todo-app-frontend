@@ -22,14 +22,14 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.userName = this.cookie.get('userName');
-    /* console.log("UserInfo:" + this.userName); */
+    
     this.getSingleUserInformation();
   }
 
   logout() {
     this.appService.logout().subscribe(
       data => {
-        /* console.log("data"); */
+        
         this.cookie.deleteAll();
         localStorage.clear();
         this.toastr.success("Log out successful !");
@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
 
       }, error => {
         this.toastr.error("Error while logging out !");
-       /*  console.log(error); */
+       
       }
     );
 
@@ -61,13 +61,10 @@ export class HeaderComponent implements OnInit {
     this.userId = this.cookie.get('userId');
     this.appService.getSingleUserInformation(this.userId).subscribe((apiResponse) => {
       if (apiResponse.status === 200) {
-        /* console.log("Single User Info fetched!");
-        console.log(apiResponse); */
         this.receivedRequests = apiResponse.data.receivedRequests;
         this.receivedRequestsLength = this.receivedRequests.length;
         
       } else {
-       /*  console.log(apiResponse); */
         this.toastr.error("Error while fetching single user info")
       }
     })

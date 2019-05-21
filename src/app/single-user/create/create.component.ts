@@ -56,7 +56,7 @@ export class CreateComponent implements OnInit {
       userId: this.cookie.get('userId'),
       userName: this.cookie.get('userName')
     }
-    /* console.log("jwt:" + this.jwt); */
+    
     this.getTodosByCreatedId();
   }
 
@@ -64,8 +64,7 @@ export class CreateComponent implements OnInit {
 
     this.todoHttpService.getTodosByCreatedId().subscribe(
       data => {
-       /*  console.log("response of getTodosByCreatedId")
-        console.log("create page data" + data.data); */
+    
         this.todoList=[];
         this.completedTodoList=[];
         this.totalTodoList = data["data"];
@@ -84,8 +83,7 @@ export class CreateComponent implements OnInit {
         this.completedTodoListLength= this.completedTodoList.length;
       },
       error => {
-        /* console.log("Some error occured");
-        console.log(error.errorMessage); */
+    
         this.toastr.error("error in fetching todos");
       }
     );
@@ -95,12 +93,11 @@ export class CreateComponent implements OnInit {
   private getTodos() {
     this.todoHttpService.getAllTodos().subscribe(
       data => {
-        /* console.log("create page data" + data.data); */
+        
         this.todoList = data["data"];
       },
       error => {
-        /* console.log("Some error occured");
-        console.log(error.errorMessage); */
+        
         this.toastr.error("error in gfetting todos");
       }
     );
@@ -135,7 +132,7 @@ export class CreateComponent implements OnInit {
     }
     if (todo.form.valid && todo.value.title != "") {
       let currentDate = new Date();
-      /* console.log(currentDate.toLocaleString); */
+      
       let todoData = {
         title: todo.value.title,
         description: "",
@@ -147,10 +144,10 @@ export class CreateComponent implements OnInit {
         createdBy: this.createdBy,
 
       }
-      /* console.log("Todo Data: " + todoData); */
+      
       this.todoHttpService.createTodo(todoData).subscribe(
         data => {
-          /* console.log(data.message); */
+          
           this.socketService.onGetNotification({ data: data.message });
           this.socketService.onShow().subscribe((data) => {
             this.snackBar.openFromComponent(ErrorComponent, {
@@ -161,14 +158,13 @@ export class CreateComponent implements OnInit {
             });
           })
 
-          /* console.log(data); */
           setTimeout(() => {
             this.getTodosByCreatedId();
           }, 1);
         },
         error => {
           this.toastr.error("Error in posting todo");
-         /*  console.log(error); */
+         
 
         }
 
@@ -197,15 +193,12 @@ export class CreateComponent implements OnInit {
             verticalPosition: "top"
           });
         })
-        //this.toastr.success("Todo marked as complete");
-       /*  console.log(data); */
         setTimeout(() => {
           this.getTodosByCreatedId();
         }, 1);
       },
       error => {
         this.toastr.error("Error in posting todo");
-        /* console.log(error); */
       }
     );
 
@@ -236,8 +229,7 @@ export class CreateComponent implements OnInit {
             verticalPosition: "top"
           });
         })
-        //this.toastr.success("Todo marked as open");
-        /* console.log(data); */
+        
         setTimeout(() => {
           this.getTodosByCreatedId();
 
@@ -245,7 +237,7 @@ export class CreateComponent implements OnInit {
       },
       error => {
         this.toastr.error("Error in posting todo");
-        /* console.log(error); */
+        
 
       }
     );
@@ -263,8 +255,6 @@ export class CreateComponent implements OnInit {
             verticalPosition: "top"
           });
         })
-        //this.toastr.success(data.message);
-       /*  console.log(data); */
         setTimeout(() => {
           this.getTodosByCreatedId();
 
@@ -272,7 +262,7 @@ export class CreateComponent implements OnInit {
       },
       error => {
         this.toastr.error("Error in deleting todo");
-        /* console.log(error); */
+        
       }
     );
 

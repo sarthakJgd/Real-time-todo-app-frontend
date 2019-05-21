@@ -78,20 +78,17 @@ export class MultiUserComponent implements OnInit {
     this.userId = this.cookie.get('userId');
     this.appService.getSingleUserInformation(this.userId).subscribe((apiResponse) => {
       if (apiResponse.status === 200) {
-        /* console.log("Single User Info fetched!");
-        console.log(apiResponse); */
-        /* this.currentUserId=[this.userId];
-        console.log(this.currentUserId); */
+        
         this.friendList = apiResponse.data.friendsList;
         if (this.friendList.length != 0) {
           this.friendListIds = this.friendList.map((friend) => friend.friendId);
         }
-        /* console.log("friend list : " + this.friendList); */
+        
         this.friendsListLength = this.friendList.length;
-        /* console.log('length: ' + this.friendsListLength); */
+        
         this.getFriendsTodos();
       } else {
-       /*  console.log(apiResponse); */
+       
         this.toastr.error("Error while fetching single user info")
       }
     })
@@ -100,11 +97,10 @@ export class MultiUserComponent implements OnInit {
   public getFriendsTodos() {
     if (this.friendListIds) {
       if (this.friendListIds.length !== 0) {
-        /* console.log("Friend list before sending to service " + this.friendListIds) */
+        
         this.todoHttpService.getFriendsTodos(this.friendListIds).subscribe(
           data => {
-            /* console.log("response of getFriendsTodos")
-            console.log(data.data); */
+            
             this.todoList=[];
             this.completedTodoList=[];
             this.totalTodoList = data["data"];
@@ -121,13 +117,10 @@ export class MultiUserComponent implements OnInit {
             }
             this.todoListLength= this.todoList.length;
             this.completedTodoListLength= this.completedTodoList.length;
-            /* this.todoList = data["data"];
-            if (this.todoList)
-              this.todoListLength = this.todoList.length; */
+            
           },
           error => {
-            /* console.log("Some error occured");
-            console.log(error.errorMessage); */
+            
             this.toastr.error("An error occured while fetching friend's todos")
           }
         );
@@ -135,7 +128,7 @@ export class MultiUserComponent implements OnInit {
     }
     else {
       this.todoList = [];
-      /* console.log("todolist is empty!") */
+      
     }
   }
 
@@ -164,15 +157,13 @@ export class MultiUserComponent implements OnInit {
             verticalPosition: "top"
           });
         })
-        //this.toastr.success("Todo marked as complete");
-       /*  console.log(data); */
         setTimeout(() => {
           this.getFriendsTodos();
         }, 100);
       },
       error => {
         this.toastr.error("Error in posting todo");
-        /* console.log(error); */
+        
       }
     );
 
@@ -202,16 +193,14 @@ export class MultiUserComponent implements OnInit {
             verticalPosition: "top"
           });
         })
-        //this.toastr.success("Todo marked as open");
-        /* console.log(data); */
+        
         setTimeout(() => {
           this.getSingleUserInformation();
         }, 100);
       },
       error => {
         this.toastr.error("Error in posting todo");
-        /* console.log(error); */
-        //alert("Error in posting todo");
+        
       }
     );
   }
@@ -228,15 +217,13 @@ export class MultiUserComponent implements OnInit {
             verticalPosition: "top"
           });
         })
-        //this.toastr.success("Todo deleted successfully");
-        /* console.log(data); */
         setTimeout(() => {
           this.getSingleUserInformation();
         }, 1000);
       },
       error => {
         this.toastr.error("Error in deleting todo");
-        /* console.log(error); */
+        
       }
     );
   }

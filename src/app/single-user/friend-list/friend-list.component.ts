@@ -118,27 +118,25 @@ export class FriendListComponent implements OnInit {
         this.currentUserId=[this.userId];
         /* console.log(this.currentUserId); */
         this.friendList = apiResponse.data.friendsList;
-        if (this.friendList.length != 0) {
+        /* if (this.friendList.length != 0) {
           this.friendListIds = this.friendList.map((friend) => friend.friendId);
          
-        }
+        } */
         this.friendsListLength = this.friendList.length;
         /* console.log('length: ' + this.friendsListLength); */
         this.sentRequests = apiResponse.data.sentRequests;
 
         /* console.log('sent request ', apiResponse.data.sentRequests); */
         this.sentRequestsLength = this.sentRequests.length;
-        if (this.sentRequests.length != 0) {
+        /* if (this.sentRequests.length != 0) {
           this.sentRequestIds = this.sentRequests.map((sentRequest) => sentRequest.userId);
-          /* console.log(this.sentRequestIds); */
-        }
+          
+        } */
         /* console.log(this.sentRequestIds)
         console.log('friend list ', apiResponse.data) */
         this.receivedRequests = apiResponse.data.receivedRequests;
         this.receivedRequestsLength = this.receivedRequests.length;
-        if (this.receivedRequests.length != 0) {
-          this.receivedRequestIds = this.receivedRequests.map((friend) => friend.userId);
-        }
+        
         this.totalRequest = apiResponse.data.totalRequest;
       } else {
         /* console.log(apiResponse); */
@@ -152,79 +150,40 @@ export class FriendListComponent implements OnInit {
     this.appService.getAllUsers().subscribe(
       data => {
         /* console.log(data); */
-        this.allUsersTotal = data.data;
-        /* 
-        console.log("allusers"+this.allUsersTotal); */
-        /* console.log('all users', this.allUsers) */
-
-        if (this.allUsersTotal && this.allUsersTotal.length !== 0) {
-          if (this.currentUserId && this.currentUserId.length !== 0) {
-            for (let i of this.currentUserId) {
-              this.allUsersTotal1 = this.allUsersTotal.filter((values) => values.userId !== i)
-              /* console.log('users', this.allUsers); */
-
+        this.allUsers = data.data;
+        for(let i in this.allUsers){
+          if(this.allUsers[i].userId === this.userId){
+            let k = parseInt(i);
+              this.allUsers.splice(k, 1);
+          }
+        }
+        for (let i in this.allUsers) {
+          for (let j in this.friendList) {
+            if (this.allUsers[i].userId === this.friendList[j].friendId) {
+              let k = parseInt(i);
+              this.allUsers.splice(k, 1);
             }
           }
-          else{
-            this.allUsersTotal1 = this.allUsersTotal;
-          }
-          /* console.log("alluserstotal 1"+this.allUsersTotal1); */
         }
-        
-
-        if (this.allUsersTotal1 && this.allUsersTotal1.length !== 0) {
-          if (this.sentRequestIds && this.sentRequestIds.length !== 0) {
-            for (let i of this.sentRequestIds) {
-              this.allUsersTotal2 = this.allUsersTotal1.filter((values) => values.userId !== i)
-              /* console.log('users', this.allUsers);
- */
+        for (let i in this.allUsers) {
+          for (let j in this.receivedRequests) {
+            if (this.allUsers[i].userId === this.receivedRequests[j].userId) {
+              let k = parseInt(i);
+              this.allUsers.splice(k, 1);
             }
           }
-          else{
-            this.allUsersTotal2 = this.allUsersTotal1;
-          }
-          /* console.log("alluserstotal 2"+this.allUsersTotal2); */
         }
-
-        if (this.allUsersTotal2 && this.allUsersTotal2.length !== 0) {
-          if (this.receivedRequestIds && this.receivedRequestIds.length !== 0) {
-            for (let i of this.receivedRequestIds) {
-              this.allUsersTotal3 = this.allUsersTotal2.filter((values) => values.userId !== i)
-              /* console.log('users', this.allUsers);
- */
+        for (let i in this.allUsers) {
+          for (let j in this.sentRequests) {
+            if (this.allUsers[i].userId === this.sentRequests[j].userId) {
+              let k = parseInt(i);
+              this.allUsers.splice(k, 1);
             }
           }
-          else{
-            this.allUsersTotal3 = this.allUsersTotal2;
-          }/* 
-          console.log("alluserstotal 3"+this.allUsersTotal3); */
         }
-
-        if (this.allUsersTotal3 && this.allUsersTotal3.length !== 0) {
-          if (this.friendListIds && this.friendListIds.length !== 0) {
-            for (let i of this.friendListIds) {
-              this.allUsersTotal4 = this.allUsersTotal3.filter((values) => values.userId !== i)
-              /* console.log('users', this.allUsers); */
-              
-            }
-          }
-          else{
-            this.allUsersTotal4 = this.allUsersTotal3;
-          }
-          /* console.log("alluserstotal 4"+this.allUsersTotal4); */
-        }
-
-       if(this.allUsersTotal4 && this.allUsersTotal4.length !== 0){
-        this.allUsers = this.allUsersTotal4;
-        /* console.log("allusers"+this.allUsers); */
-        this.allUsersLength = this.allUsers.length;
-       }
-        
-        
-       /*  console.log('all users length'+this.allUsersLength) */
       },
       err => {
-       /*  console.log(err); */
+       
         this.toastr.error("an error occured while fetching todos");
       }
     );
@@ -237,12 +196,9 @@ export class FriendListComponent implements OnInit {
       requestedId: this.userId,
       requestedName: this.userName
     }
-    /* console.log('requestorId ' + reqUserId + '\nrequestorName ' + reqUserName+ '\nrequestedId ' +
-      this.userId + '\nrequestedId ' + this.userName);
- */
+    
     this.appService.acceptFriendRequest(friendRequest).subscribe((apiResponse) => {
       if (apiResponse.status === 200) {
-        /* console.log(apiResponse); */
         this.socketService.onGetNotification({data: apiResponse.message});
           this.socketService.onShow().subscribe((data) => {
             this.snackBar.openFromComponent(ErrorComponent, {
@@ -252,11 +208,11 @@ export class FriendListComponent implements OnInit {
               verticalPosition: "top"
             });
           })
-        //this.toastr.success(apiResponse.message);
+        
         this.getSingleUserInformation();
         this.getAllUser();
       } else {
-        /* console.log(apiResponse); */
+        
         this.toastr.error("Error occured while sending friend request!")
       }
     });
@@ -270,17 +226,13 @@ export class FriendListComponent implements OnInit {
       requestedId: this.userId,
       requestedName: this.userName
     }
-   /*  console.log('requestorId ' + reqUserId + '\nrequestorName ' + reqUserName+ '\nrequestedId ' +
-      this.userId + '\nrequestedId ' + this.userName); */
 
     this.appService.rejectFriendRequest(friendRequest).subscribe((apiResponse) => {
       if (apiResponse.status === 200) {
-       /*  console.log(apiResponse); */
         this.toastr.success("Friend Request rejected!");
         this.getSingleUserInformation();
         this.getAllUser();
       } else {
-        /* console.log(apiResponse); */
         this.toastr.error("Error occured while rejecting friend request!")
       }
     });
@@ -293,17 +245,15 @@ export class FriendListComponent implements OnInit {
       requestedId: reqUserId,
       requestedName: reqUserName
     }
-    /* console.log('requestorId ' + reqUserId + '\nrequestorName ' + reqUserName+ '\nrequestedId ' +
-      this.userId + '\nrequestedId ' + this.userName); */
-
+    
     this.appService.rejectFriendRequest(friendRequest).subscribe((apiResponse) => {
       if (apiResponse.status === 200) {
-        /* console.log(apiResponse); */
+    
         this.toastr.success("Friend Request deleted");
         this.getSingleUserInformation();
         this.getAllUser();
       } else {
-       /*  console.log(apiResponse); */
+       
         this.toastr.error("Error occured while rejecting friend request!")
       }
     });

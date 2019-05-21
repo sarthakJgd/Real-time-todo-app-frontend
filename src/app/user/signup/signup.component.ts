@@ -62,10 +62,10 @@ export class SignupComponent implements OnInit {
         
       }
 
-      /* console.log(data); */
+      
 
       this.appService.signUpFunction(data).subscribe((apiResponse)=>{
-         /*  console.log(apiResponse); */
+         
 
           if(apiResponse.status === 200){
             this.toastr.success("Sign up successful");

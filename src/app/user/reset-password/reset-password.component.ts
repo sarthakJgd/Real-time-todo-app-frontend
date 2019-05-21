@@ -41,7 +41,7 @@ export class ResetPasswordComponent implements OnInit {
       };
       this.appService.resetPasswords(this.data).subscribe(
         apiResponse => {
-          /* console.log(apiResponse); */
+          
 
           if (apiResponse.status === 200) {
             this.toastr.success("Password has been reset");

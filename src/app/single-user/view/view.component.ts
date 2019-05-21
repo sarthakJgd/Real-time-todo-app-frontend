@@ -41,14 +41,14 @@ export class ViewComponent implements OnInit {
 
     this.userInfo = this.appService.getUserInfoFromLocalStorage();
 
-    /* console.log(this.userInfo); */
+    
 
     this.checkStatus();
     this._route.paramMap.subscribe((param: ParamMap) => {
-      /* console.log(param); */
+      
       if (param.has('id')) {
         this.myTodoId = param.get('id');
-        /* console.log("The todoId is:" + this.myTodoId); */
+        
         this.getSingleTodoInformation();
 
       }
@@ -59,14 +59,14 @@ export class ViewComponent implements OnInit {
     this.todoHttpService.getSingleTodoInformation(this.myTodoId).subscribe(
 
       data => {
-       /*  console.log(data); */
+       
         this.currentTodo = data.data;
         if(this.currentTodo === null || this.currentTodo === undefined)
         this.router.navigateByUrl('page-not-found');
-        //console.log("title", this.currentTodo.title);
+        
       },
       error => {
-        /* console.log("Some error occured"); */
+        
         this.toastr.error(error.message);
         this.router.navigateByUrl('page-not-found');
       }
@@ -105,15 +105,14 @@ export class ViewComponent implements OnInit {
             verticalPosition: "top"
           });
         })
-        //this.toastr.success(data.message);
-        /* console.log(data); */
+        
         setTimeout(() => {
           this.router.navigate(["single-user/todo"])
         }, 1000);
       },
       error => {
         this.toastr.error("Error in deleting todo");
-        /* console.log(error); */
+        
       }
     );
   }
@@ -130,19 +129,18 @@ export class ViewComponent implements OnInit {
             verticalPosition: "top"
           });
         })
-        //this.toastr.success(apiResponse.message);
-        /* console.log(apiResponse); */
+        
         setTimeout(() => {
           this.getSingleTodoInformation();
-          //this.router.navigate(["single-user/todo"]);
+          
         }, 100);
       }
       else {
         this.toastr.error(apiResponse.message);
-        /* console.log(apiResponse); */
+        
         setTimeout(() => {
           this.getSingleTodoInformation();
-          //this.router.navigate(["single-user/todo"]);
+         
         }, 100);
       }
     });
