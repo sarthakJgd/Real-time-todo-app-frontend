@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="container">
+<div class="container" *ngIf="allUsersLength">
 
 
 
@@ -146,4 +146,12 @@
     
     <pagination-controls (pageChange)="p4 = $event" id="fourth"></pagination-controls>
   </div>
+</div>
+<div *ngIf="!allUsersLength">
+  <mat-progress-spinner 
+      class="example-margin spinner"
+      [color]="color"
+      [mode]="mode"
+      [value]="value">
+  </mat-progress-spinner>
 </div>

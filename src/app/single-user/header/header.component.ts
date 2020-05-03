@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.userName = this.cookie.get('userName');
     
-    this.getSingleUserInformation();
+    //this.getSingleUserInformation();
   }
 
   logout() {

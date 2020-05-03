@@ -15,8 +15,8 @@ export class TodoHttpService {
   public arr = [];
   public allTodos;
   public currentTodo;
-  public baseUrl = "http://RealTimeTodoApp-env.qqmk7cimzg.us-east-2.elasticbeanstalk.com/api/v1/todos";
-  //"http://localhost:3000/api/v1/todos";
+  public baseUrl = //"http://RealTimeTodoApp-env.qqmk7cimzg.us-east-2.elasticbeanstalk.com/api/v1/todos";
+  "http://localhost:3000/api/v1/todos";
   
   public authToken = "";
 

@@ -32,6 +32,9 @@ export class FriendListComponent implements OnInit {
   allUsersLength: number;
   currentUserId: any= [];
   durationInSeconds:number = 2;
+  color:any="primary";
+  mode:any="indeterminate";
+  value:any;
   
   p1: number = 1;
   p2: number = 1;
@@ -57,7 +60,7 @@ export class FriendListComponent implements OnInit {
     console.log("logged in user\n" + this.userId + ' ' + this.userName); */
     this.checkStatus();
     this.getSingleUserInformation();
-    this.getAllUser();
+    /* this.getAllUser(); */
 
   }
 
@@ -138,6 +141,7 @@ export class FriendListComponent implements OnInit {
         this.receivedRequestsLength = this.receivedRequests.length;
         
         this.totalRequest = apiResponse.data.totalRequest;
+        this.getAllUser();
       } else {
         /* console.log(apiResponse); */
         this.toastr.error("Error while fetching single user info")
@@ -181,6 +185,7 @@ export class FriendListComponent implements OnInit {
             }
           }
         }
+        this.allUsersLength = this.allUsers.length;
       },
       err => {
        

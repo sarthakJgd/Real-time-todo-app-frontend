@@ -17,6 +17,16 @@
   flex-basis: 0;
 }
 
+.spinner {
+  display: block;
+position: fixed;
+z-index: 1031;
+top: 50%;
+right: 50%; /* or: left: 50%; */
+margin-top: 0px; /* have of the elements height */
+margin-right: 10px; /* have of the elements widht */
+}
+
 .example-headers-align .mat-expansion-panel-header-description{
   justify-content: space-between;
   align-items: center;

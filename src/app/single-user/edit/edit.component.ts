@@ -41,10 +41,13 @@ export class EditComponent implements OnInit {
   public showCompletedTodoList: any = false;
   public todo: any;
   public myTodoId: String;
-  private mode = 'create';
+  //private mode = 'create';
   public task: String;
   editedBy: any;
   durationInSeconds:number = 2;
+  color:any="primary";
+  mode:any="indeterminate";
+  value:any;
  
 
   constructor(private _route: ActivatedRoute,

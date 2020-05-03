@@ -22,7 +22,9 @@ export class ViewComponent implements OnInit {
   authToken: string;
   userInfo: any;
   durationInSeconds: number = 2;
-
+  color:any="primary";
+  mode:any="indeterminate";
+  value:any;
 
   constructor(private _route: ActivatedRoute,
     private router: Router,

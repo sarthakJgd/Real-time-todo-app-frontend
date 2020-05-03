@@ -1,10 +1,9 @@
 <app-header></app-header>
-<div class="container">
-
+<div class="container"  *ngIf="!showSpinner">
   <div>
     <h4>Friends' Todos</h4>
   </div>
-  <div *ngIf="todoListLength !== 0">
+  <div>
     <div class="row">
       <div *ngFor="let todo of todoList | paginate: { itemsPerPage: 6, currentPage: p1 , id: 'first'}">
         <!-- <div *ngIf="!todo.statusSelected || todo.statusSelected == 'Open'"> -->
@@ -33,16 +32,16 @@
   </div>
 
   <div *ngIf="todoListLength === 0">
-    <h5>Friends have no added todos.</h5>
+    <p>Friends have no added todos.</p>
     <br>
   </div>
   <pagination-controls *ngIf="todoListLength !== 0" (pageChange)="p1 = $event" id="first"></pagination-controls>
 
-
-
   <hr>
-  <button type="button" class="btn" style="margin-bottom: 3%;background-color:#3B53B9;color:white" (click)="show()">Show
-    Completed Todos</button>
+  <button type="button" class="btn" 
+  style="margin-bottom: 3%;background-color:#3B53B9;color:white" 
+  (click)="show()" 
+  *ngIf="completedTodoList.completedTodoListLength != 0">Show Completed Todos</button>
 
   <div class="row" *ngIf="showCompletedTodoList">
     <div
@@ -75,4 +74,12 @@
   </div>
   <pagination-controls *ngIf="showCompletedTodoList && (completedTodoListLength !==0)" (pageChange)="p2 = $event"
     id="second"></pagination-controls>
+</div>
+<div *ngIf="showSpinner">
+  <mat-progress-spinner 
+      class="example-margin spinner"
+      [color]="color"
+      [mode]="mode"
+      [value]="value">
+  </mat-progress-spinner>
 </div>

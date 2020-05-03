@@ -22,8 +22,8 @@ import { MatSnackBar } from '@angular/material';
 export class MultiUserComponent implements OnInit {
 
   public title: String;
-  public todoList: any = [];
-  public completedTodoList: any = [];
+  public todoList: any;
+  public completedTodoList: any;
   public showCompletedTodoList: any = false;
   public createdBy: any;
   private jwt: any;
@@ -31,12 +31,16 @@ export class MultiUserComponent implements OnInit {
   userId: string;
   friendList: any;
   friendListIds: any;
-  friendsListLength: any = 0;
-  todoListLength: any = 0;
+  friendsListLength: any;
+  todoListLength: any;
   editedBy: any;
   durationInSeconds: number = 2;
   totalTodoList: any;
   completedTodoListLength: any;
+  color:any="primary";
+  mode:any="indeterminate";
+  value:any;
+  showSpinner:boolean = false;
 
   constructor(private todoService: TodoService,
     private todoHttpService: TodoHttpService,
@@ -75,26 +79,30 @@ export class MultiUserComponent implements OnInit {
   } // end checkStatus
 
   public getSingleUserInformation() {
+    this.showSpinner = true;
     this.userId = this.cookie.get('userId');
     this.appService.getSingleUserInformation(this.userId).subscribe((apiResponse) => {
       if (apiResponse.status === 200) {
-        
         this.friendList = apiResponse.data.friendsList;
         if (this.friendList.length != 0) {
           this.friendListIds = this.friendList.map((friend) => friend.friendId);
         }
         
         this.friendsListLength = this.friendList.length;
-        
-        this.getFriendsTodos();
+        this.showSpinner = false;
+        this.todoListLength = 0
+        if(this.friendsListLength !=0){
+          this.getFriendsTodos();
+        }
       } else {
-       
+        this.showSpinner = false;
         this.toastr.error("Error while fetching single user info")
       }
     })
   }
 
   public getFriendsTodos() {
+    this.showSpinner = true;
     if (this.friendListIds) {
       if (this.friendListIds.length !== 0) {
         
@@ -117,10 +125,10 @@ export class MultiUserComponent implements OnInit {
             }
             this.todoListLength= this.todoList.length;
             this.completedTodoListLength= this.completedTodoList.length;
-            
+            this.showSpinner = false;
           },
           error => {
-            
+            this.showSpinner = false;
             this.toastr.error("An error occured while fetching friend's todos")
           }
         );
@@ -128,7 +136,7 @@ export class MultiUserComponent implements OnInit {
     }
     else {
       this.todoList = [];
-      
+      this.showSpinner = false;
     }
   }
 
@@ -137,6 +145,7 @@ export class MultiUserComponent implements OnInit {
   }
 
   public markComplete(todoId, todoTitle) {
+    this.showSpinner = true;
     this.editedBy = {
       userId: this.cookie.get('userId'),
       userName: this.cookie.get('userName')
@@ -148,6 +157,7 @@ export class MultiUserComponent implements OnInit {
     }
     this.todoHttpService.editTodo(todoId, todoData).subscribe(
       data => {
+        this.showSpinner = false;
         this.socketService.onGetNotification({ data: data.message });
         this.socketService.onShow().subscribe((data) => {
           this.snackBar.openFromComponent(ErrorComponent, {
@@ -162,6 +172,7 @@ export class MultiUserComponent implements OnInit {
         }, 100);
       },
       error => {
+        this.showSpinner = false;
         this.toastr.error("Error in posting todo");
         
       }
@@ -173,6 +184,7 @@ export class MultiUserComponent implements OnInit {
   }
 
   public markOpen(todoId, todoTitle) {
+    this.showSpinner = true;
     this.editedBy = {
       userId: this.cookie.get('userId'),
       userName: this.cookie.get('userName')
@@ -184,6 +196,7 @@ export class MultiUserComponent implements OnInit {
     }
     this.todoHttpService.editTodo(todoId, todoData).subscribe(
       data => {
+        this.showSpinner = false;
         this.socketService.onGetNotification({ data: data.message });
         this.socketService.onShow().subscribe((data) => {
           this.snackBar.openFromComponent(ErrorComponent, {
@@ -199,15 +212,17 @@ export class MultiUserComponent implements OnInit {
         }, 100);
       },
       error => {
+        this.showSpinner = false;
         this.toastr.error("Error in posting todo");
-        
       }
     );
   }
 
   public deleteTodo(todoId) {
+    this.showSpinner = true;
     this.todoHttpService.deleteTodo(todoId).subscribe(
       data => {
+        this.showSpinner = false;
         this.socketService.onGetNotification({ data: data.message });
         this.socketService.onShow().subscribe((data) => {
           this.snackBar.openFromComponent(ErrorComponent, {
@@ -222,6 +237,7 @@ export class MultiUserComponent implements OnInit {
         }, 1000);
       },
       error => {
+        this.showSpinner = false;
         this.toastr.error("Error in deleting todo");
         
       }

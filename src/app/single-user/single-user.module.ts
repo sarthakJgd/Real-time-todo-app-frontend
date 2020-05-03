@@ -30,6 +30,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { ErrorComponent } from './error/error.component';
 import { PageNotFoundComponent } from '../page-not-found/page-not-found/page-not-found.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MatSnackBarModule ,
     MatMenuModule,
     NgxPaginationModule,
+    MatProgressSpinnerModule,
     RouterModule.forChild([
       { path: 'single-user/todo', component: CreateComponent},
       { path: 'single-user/todo/view/:id', component: ViewComponent},

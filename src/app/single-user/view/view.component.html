@@ -1,7 +1,7 @@
 
   <app-header></app-header>
-  <div class="container" (keydown)="onKeyPress($event)">
-    <div class="row" *ngIf="currentTodo">
+  <div class="container" *ngIf="currentTodo" (keydown)="onKeyPress($event)">
+    <div class="row">
       <div class="col-md-12">
           <div class="float-right">
               <button class="btn btn-outline-secondary" (click)="goBackToPreviousPage()">
@@ -50,4 +50,12 @@
     <hr>
     <button type="submit" class="btn btn-primary" style="margin-bottom: 2%;background-color:#3B53B9;color:white"
      (click)="undoTodoState(currentTodo.todoId)">Undo previous changes</button>
+  </div>
+  <div *ngIf="!currentTodo">
+    <mat-progress-spinner 
+        class="example-margin spinner"
+        [color]="color"
+        [mode]="mode"
+        [value]="value">
+    </mat-progress-spinner>
   </div>

@@ -16,6 +16,16 @@
     width: 95%;
   }
   
+  .spinner {
+    display: block;
+  position: fixed;
+  z-index: 1031;
+  top: 50%;
+  right: 50%; /* or: left: 50%; */
+  margin-top: 0px; /* have of the elements height */
+  margin-right: 10px; /* have of the elements widht */
+  }
+  
   .strikethrough{
     text-decoration:line-through;
     opacity: 0.5;

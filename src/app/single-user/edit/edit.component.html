@@ -1,5 +1,5 @@
   <app-header></app-header>
-  <div class="container">
+  <div class="container" *ngIf="todo">
       <div style="display: block"></div>
       
     <form #todoForm="ngForm" (ngSubmit)="onSubmit(todoForm,myTodoId)" novalidate>
@@ -73,4 +73,12 @@
 
 
     </form>
+  </div>
+  <div *ngIf="!todo">
+    <mat-progress-spinner 
+        class="example-margin spinner"
+        [color]="color"
+        [mode]="mode"
+        [value]="value">
+    </mat-progress-spinner>
   </div>

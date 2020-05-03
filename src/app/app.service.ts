@@ -15,8 +15,8 @@ import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 })
 export class AppService {
 
-  private url =  "http://RealTimeTodoApp-env.qqmk7cimzg.us-east-2.elasticbeanstalk.com";
-  //"http://localhost:3000";
+  private url =  //"http://RealTimeTodoApp-env.qqmk7cimzg.us-east-2.elasticbeanstalk.com";
+  "http://localhost:3000";
   
   private authToken: any;
   constructor(public http: HttpClient, public cookie: CookieService, ) {
