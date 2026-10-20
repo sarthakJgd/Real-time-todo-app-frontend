@@ -56,8 +56,6 @@ export class FriendListComponent implements OnInit {
     this.userId = this.cookie.get('userId');
     this.userName = this.cookie.get('userName');
     this.authToken = this.cookie.get('authtoken');
-   /*  console.log('the auth token: ' + this.authToken);
-    console.log("logged in user\n" + this.userId + ' ' + this.userName); */
     this.checkStatus();
     this.getSingleUserInformation();
     /* this.getAllUser(); */
@@ -93,7 +91,6 @@ export class FriendListComponent implements OnInit {
 
     this.appService.sendFriendRequest(friendRequest).subscribe((apiResponse) => {
       if (apiResponse.status === 200) {
-       /*  console.log(apiResponse); */
         this.socketService.onGetNotification({data: apiResponse.message});
           this.socketService.onShow().subscribe((data) => {
             this.snackBar.openFromComponent(ErrorComponent, {
@@ -107,7 +104,6 @@ export class FriendListComponent implements OnInit {
         this.getSingleUserInformation();
         this.getAllUser();
       } else {
-       /*  console.log(apiResponse); */
         this.toastr.error("Error occured while send friend request!")
       }
     });
@@ -116,34 +112,15 @@ export class FriendListComponent implements OnInit {
   public getSingleUserInformation() {
     this.appService.getSingleUserInformation(this.userId).subscribe((apiResponse) => {
       if (apiResponse.status === 200) {
-       /*  console.log("Single User Info fetched!");
-        console.log(apiResponse); */
-        this.currentUserId=[this.userId];
-        /* console.log(this.currentUserId); */
-        this.friendList = apiResponse.data.friendsList;
-        /* if (this.friendList.length != 0) {
-          this.friendListIds = this.friendList.map((friend) => friend.friendId);
-         
-        } */
+        this.friendList = apiResponse.data.friendsList || [];
         this.friendsListLength = this.friendList.length;
-        /* console.log('length: ' + this.friendsListLength); */
-        this.sentRequests = apiResponse.data.sentRequests;
-
-        /* console.log('sent request ', apiResponse.data.sentRequests); */
+        this.sentRequests = apiResponse.data.sentRequests || [];
         this.sentRequestsLength = this.sentRequests.length;
-        /* if (this.sentRequests.length != 0) {
-          this.sentRequestIds = this.sentRequests.map((sentRequest) => sentRequest.userId);
-          
-        } */
-        /* console.log(this.sentRequestIds)
-        console.log('friend list ', apiResponse.data) */
-        this.receivedRequests = apiResponse.data.receivedRequests;
+        this.receivedRequests = apiResponse.data.receivedRequests || [];
         this.receivedRequestsLength = this.receivedRequests.length;
-        
-        this.totalRequest = apiResponse.data.totalRequest;
+        this.totalRequest = apiResponse.data.totalRequest || 0;
         this.getAllUser();
       } else {
-        /* console.log(apiResponse); */
         this.toastr.error("Error while fetching single user info")
       }
     })
@@ -153,7 +130,6 @@ export class FriendListComponent implements OnInit {
   public getAllUser() {
     this.appService.getAllUsers().subscribe(
       data => {
-        /* console.log(data); */
         this.allUsers = data.data;
         for(let i in this.allUsers){
           if(this.allUsers[i].userId === this.userId){

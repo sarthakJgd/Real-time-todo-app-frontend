@@ -1,27 +1,17 @@
-# LiveToDoApp
+# Live To-do App frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
+Angular 7 client for the Live To-do API. It provides account screens, todo management, friend requests and Socket.IO notifications.
 
-## Development server
+## Local development
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+The checked-in development environment targets the API at `http://localhost:3000`. Install the locked dependencies with `npm ci`, then run `npm start` and open `http://localhost:4200`.
 
-## Code scaffolding
+Protected API requests use `Authorization: Bearer <token>`. The production environment uses same-origin API and Socket.IO URLs; configure a reverse proxy to route `/api` and Socket.IO to the backend. If a separate backend origin is used, set an HTTPS origin in `src/environments/environment.prod.ts` and allow the frontend origin through the backend's `CORS_ORIGIN` setting.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Build and tests
 
-## Build
+- `npm run build` builds the application.
+- `npm test` runs the Angular/Karma unit test suite.
+- `npm run e2e` runs the Protractor end-to-end suite.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+The current Angular 7 toolchain does not build on Node.js 24 LTS: the build fails when `http-deceiver` requests Node's removed `http_parser` binding. Upgrade Angular CLI and its build dependencies before relying on Node 24 for frontend builds. The repository currently has no Node 24 compatible build result.

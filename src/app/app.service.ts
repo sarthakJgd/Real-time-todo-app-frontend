@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -15,8 +16,7 @@ import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 })
 export class AppService {
 
-  private url =  //"http://RealTimeTodoApp-env.qqmk7cimzg.us-east-2.elasticbeanstalk.com";
-  "http://localhost:3000";
+  private url = environment.apiBaseUrl;
   
   private authToken: any;
   constructor(public http: HttpClient, public cookie: CookieService, ) {
@@ -56,11 +56,7 @@ export class AppService {
   }
 
   public logout(): Observable<any> {
-
-    const params = new HttpParams()
-      .set('authToken', this.cookie.get('authtoken'))
-
-    return this.http.post(`${this.url}/api/v1/users/logout`, params);
+    return this.http.post(`${this.url}/api/v1/users/logout`, {}, this.authOptions());
 
   } // end logout function
 
@@ -78,8 +74,7 @@ export class AppService {
   }
 
   public getAllUsers(): Observable<any> {
-    this.authToken = this.cookie.get('authtoken');
-    let myResponse = this.http.get(this.url + '/api/v1/users/view/all' + '?authToken=' + this.authToken);
+    let myResponse = this.http.get(this.url + '/api/v1/users/view/all', this.authOptions());
    /*  console.log(myResponse); */
     return myResponse;
   }
@@ -92,17 +87,13 @@ export class AppService {
       .set('requestedName', data.requestedName)
 
 
-    this.authToken = this.cookie.get('authtoken');
-
-    let myResponse = this.http.put(this.url + '/api/v1/users/sendFriendRequest' + '?authToken=' + this.authToken, params);
+    let myResponse = this.http.put(this.url + '/api/v1/users/sendFriendRequest', params, this.authOptions());
    /*  console.log(myResponse); */
     return myResponse;
   }
 
   public getSingleUserInformation(userId): Observable<any> {
-    this.authToken = this.cookie.get('authtoken');
-    let theResponse = this.http.get(this.url + '/api/v1/users/' + userId + '/details?authToken=' + this.authToken);
-   /*  console.log("Single Todo Response:" + theResponse); */
+    let theResponse = this.http.get(this.url + '/api/v1/users/' + userId + '/details', this.authOptions());
     return theResponse;
   }
 
@@ -114,9 +105,7 @@ export class AppService {
       .set('requestedName', data.requestedName)
 
 
-    this.authToken = this.cookie.get('authtoken');
-
-    let myResponse = this.http.put(this.url + '/api/v1/users/acceptFriendRequest' + '?authToken=' + this.authToken, params);
+    let myResponse = this.http.put(this.url + '/api/v1/users/acceptFriendRequest', params, this.authOptions());
     /* console.log(myResponse); */
     return myResponse;
   }
@@ -129,10 +118,12 @@ export class AppService {
       .set('requestedName', data.requestedName)
 
 
-    this.authToken = this.cookie.get('authtoken');
-
-    let myResponse = this.http.put(this.url + '/api/v1/users/rejectFriendRequest' + '?authToken=' + this.authToken, params);
+    let myResponse = this.http.put(this.url + '/api/v1/users/rejectFriendRequest', params, this.authOptions());
    /*  console.log(myResponse); */
     return myResponse;
+  }
+
+  private authOptions() {
+    return { headers: new HttpHeaders().set('Authorization', `Bearer ${this.cookie.get('authtoken')}`) };
   }
 }
