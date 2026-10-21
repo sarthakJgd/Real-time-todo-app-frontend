@@ -1,13 +1,15 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ChangeDetectionStrategy } from '@angular/core';
 import { AppService } from 'src/app/app.service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { NotificationService } from 'src/app/notification.service';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+    selector: 'app-signup',
+    templateUrl: './signup.component.html',
+    styleUrls: ['./signup.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class SignupComponent implements OnInit {
 
@@ -18,8 +20,8 @@ export class SignupComponent implements OnInit {
   public password: any;  
   public apiKey: any;  
   public selectedValue:any= "Country Code";
-  isSelected:boolean = true;
-  constructor(public appService:AppService, public router:Router,private toastr: ToastrService, vcr: ViewContainerRef) { }
+  isSelected = true;
+  constructor(public appService:AppService, public router:Router,private toastr: NotificationService, vcr: ViewContainerRef) { }
 
   ngOnInit() {
   }

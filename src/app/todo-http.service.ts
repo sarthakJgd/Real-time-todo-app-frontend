@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../environments/environment';
 //Import http
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 //Import Observables
 import { Observable } from "rxjs";
-import { catchError,tap } from "rxjs/operators";
 
 import { CookieService } from 'ngx-cookie-service';
 @Injectable({
@@ -15,8 +15,7 @@ export class TodoHttpService {
   public arr = [];
   public allTodos;
   public currentTodo;
-  public baseUrl = //"http://RealTimeTodoApp-env.qqmk7cimzg.us-east-2.elasticbeanstalk.com/api/v1/todos";
-  "http://localhost:3000/api/v1/todos";
+  public baseUrl = `${environment.apiBaseUrl}/api/v1/todos`;
   
   public authToken = "";
 
@@ -27,7 +26,7 @@ export class TodoHttpService {
    }
 
    public getAllTodos(): Observable<any>{
-    let myResponse = this._http.get(this.baseUrl+'/all' +'?authToken='+this.authToken);
+    let myResponse = this._http.get(this.baseUrl+'/all', this.authOptions());
    /*  console.log(myResponse); */
     
     return myResponse;
@@ -35,7 +34,7 @@ export class TodoHttpService {
 
   public getTodosByCreatedId(): Observable<any>{
     let userId = this.cookie.get('userId');
-    let myResponse = this._http.get(this.baseUrl+'/getTodosByCreatedId/'+userId  +'?authToken='+this.authToken);
+    let myResponse = this._http.get(this.baseUrl+'/getTodosByCreatedId/'+userId, this.authOptions());
     /* console.log(myResponse); */
     return myResponse;
   }
@@ -43,20 +42,18 @@ export class TodoHttpService {
   public getFriendsTodos(friendListIds): Observable<any>{
     let friendListIdsArray = friendListIds;
    /*  console.log("friendListIdsArray: "+friendListIdsArray); */
-    let myResponse = this._http.post(this.baseUrl+'/getFriendsTodos' +'?authToken='+this.authToken,friendListIdsArray);
+    let myResponse = this._http.post(this.baseUrl+'/getFriendsTodos', friendListIdsArray, this.authOptions());
    /*  console.log(myResponse); */
     return myResponse;
   }
 
   public getSingleTodoInformation(currentTodoId) : any{
-  let theResponse = this._http.get(this.baseUrl+'/view'+'/'+currentTodoId +'?authToken='+this.authToken);
-/*   console.log("Single Todo Response:"+ theResponse); */
+  let theResponse = this._http.get(this.baseUrl+'/view'+'/'+currentTodoId, this.authOptions());
   return theResponse;
   
 }
   public createTodo(todoData):any {
-  let theResponse = this._http.post(this.baseUrl+'/create' +'?authToken='+this.authToken, todoData);
-  /* console.log("Todo Creation Response:"+ theResponse); */
+  let theResponse = this._http.post(this.baseUrl+'/create', todoData, this.authOptions());
   return theResponse;
 }
 
@@ -65,27 +62,25 @@ export class TodoHttpService {
     userId: this.cookie.get('userId'),
     userName: this.cookie.get('userName')
   };
-  let theResponse = this._http.post(this.baseUrl+'/'+todoId+'/delete'  +'?authToken='+this.authToken,data);
- /*  console.log("Todo Deletion Response:"+ theResponse); */
+  let theResponse = this._http.post(this.baseUrl+'/'+todoId+'/delete', data, this.authOptions());
   return theResponse;
 }
 
   public editTodo(todoId, todoData): any{
-  let theResponse = this._http.put(this.baseUrl+'/'+todoId+'/edit' +'?authToken='+this.authToken,todoData);
-  /* console.log("Todo Edit Response:"+ theResponse); */
+  let theResponse = this._http.put(this.baseUrl+'/'+todoId+'/edit', todoData, this.authOptions());
   return theResponse;
 }
 
 public undoTodoState(todoId): any{
   let userName = this.cookie.get('userName');
-  let theResponse = this._http.get(this.baseUrl+'/'+todoId+'/undoTodoState'+'?authToken='+this.authToken+'&userName='+userName);
- /*  console.log("Todo Undo Response:"+ theResponse); */
+  let theResponse = this._http.get(this.baseUrl+'/'+todoId+'/undoTodoState', {
+    ...this.authOptions(),
+    params: { userName }
+  });
   return theResponse;
 }
 
-  private errorHandler(err: HttpErrorResponse){
-  /* console.log("An error occured!");
-  console.log(err.message); */
-  return Observable.throw(err.message);
-}
+  private authOptions() {
+    return { headers: new HttpHeaders().set('Authorization', `Bearer ${this.authToken}`) };
+  }
 }

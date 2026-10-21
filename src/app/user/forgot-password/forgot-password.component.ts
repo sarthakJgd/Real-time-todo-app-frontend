@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { NotificationService } from 'src/app/notification.service';
 import { AppService } from 'src/app/app.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-forgot-password',
-  templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.css']
+    selector: 'app-forgot-password',
+    templateUrl: './forgot-password.component.html',
+    styleUrls: ['./forgot-password.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ForgotPasswordComponent implements OnInit {
   forgotPasswordEmail:any;
   isSent:any;
-  constructor(public toastr: ToastrService,
+  constructor(public toastr: NotificationService,
     public appService : AppService,
     public router: Router) { }
 

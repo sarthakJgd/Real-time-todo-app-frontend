@@ -1,14 +1,16 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ChangeDetectionStrategy } from '@angular/core';
 import { AppService } from './../../app.service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { NotificationService } from 'src/app/notification.service';
 import { CookieService } from 'ngx-cookie-service';
 
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class LoginComponent implements OnInit {
 
@@ -17,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   constructor(public appService:AppService, 
     public router:Router,
-    private toastr: ToastrService, 
+    private toastr: NotificationService,
     vcr: ViewContainerRef, 
     private cookieService: CookieService) {}
 

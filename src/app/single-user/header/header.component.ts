@@ -1,23 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AppService } from 'src/app/app.service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { NotificationService } from 'src/app/notification.service';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class HeaderComponent implements OnInit {
   userName: any;
   userId: string;
   receivedRequests: any;
-  receivedRequestsLength: number = 0;
+  receivedRequestsLength = 0;
 
   constructor(public router: Router,
     private appService: AppService,
-    public toastr: ToastrService,
+    public toastr: NotificationService,
     private cookie: CookieService) { }
 
   ngOnInit() {

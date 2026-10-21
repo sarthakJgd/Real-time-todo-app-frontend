@@ -6,9 +6,10 @@ import {RouterModule, Routes} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {CookieService} from 'ngx-cookie-service'; 
-import { MatIconModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import {ToastrModule} from 'ngx-toastr';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { UserHeaderComponent } from './user-header/user-header.component';
 import { ThankYouComponent } from './thank-you/thank-you.component';
@@ -22,7 +23,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     FormsModule,
     BrowserAnimationsModule,
     MatIconModule,
-    ToastrModule.forRoot(),
+    MatSnackBarModule,
     MatProgressSpinnerModule,
     RouterModule.forChild([
       {path:"sign-up",component:SignupComponent},

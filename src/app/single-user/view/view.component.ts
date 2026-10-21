@@ -1,19 +1,21 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { TodoService } from 'src/app/todo.service';
 import { DatePipe } from '@angular/common';
 import { TodoHttpService } from 'src/app/todo-http.service';
-import { ToastrService } from 'ngx-toastr';
+import { NotificationService } from 'src/app/notification.service';
 import { CookieService } from 'ngx-cookie-service';
 import { AppService } from 'src/app/app.service';
 import { SocketService } from 'src/app/socket.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorComponent } from '../error/error.component';
 
 @Component({
-  selector: 'app-view',
-  templateUrl: './view.component.html',
-  styleUrls: ['./view.component.css']
+    selector: 'app-view',
+    templateUrl: './view.component.html',
+    styleUrls: ['./view.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ViewComponent implements OnInit {
 
@@ -21,7 +23,7 @@ export class ViewComponent implements OnInit {
   currentTodo: any;
   authToken: string;
   userInfo: any;
-  durationInSeconds: number = 2;
+  durationInSeconds = 2;
   color:any="primary";
   mode:any="indeterminate";
   value:any;
@@ -31,7 +33,7 @@ export class ViewComponent implements OnInit {
     private todoService: TodoService,
     private datePipe: DatePipe,
     private todoHttpService: TodoHttpService,
-    private toastr: ToastrService,
+    private toastr: NotificationService,
     private cookie: CookieService,
     private appService: AppService,
     private socketService: SocketService,
