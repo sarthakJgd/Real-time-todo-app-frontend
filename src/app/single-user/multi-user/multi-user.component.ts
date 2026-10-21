@@ -1,27 +1,29 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { TodoService } from 'src/app/todo.service';
 import { NgForm } from '@angular/forms';
 import { empty } from 'rxjs';
 import { TodoHttpService } from 'src/app/todo-http.service';
 import { DatePipe } from '@angular/common';
 import { HeaderComponent } from './../header/header.component';
-import { ToastrService } from 'ngx-toastr';
+import { NotificationService } from 'src/app/notification.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
 import { SocketService } from 'src/app/socket.service';
 import { ErrorComponent } from '../error/error.component';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
-  selector: 'app-multi-user',
-  templateUrl: './multi-user.component.html',
-  styleUrls: ['./multi-user.component.css']
+    selector: 'app-multi-user',
+    templateUrl: './multi-user.component.html',
+    styleUrls: ['./multi-user.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class MultiUserComponent implements OnInit {
 
-  public title: String;
+  public title: string;
   public todoList: any;
   public completedTodoList: any;
   public showCompletedTodoList: any = false;
@@ -34,19 +36,19 @@ export class MultiUserComponent implements OnInit {
   friendsListLength: any;
   todoListLength: any;
   editedBy: any;
-  durationInSeconds: number = 2;
+  durationInSeconds = 2;
   totalTodoList: any;
   completedTodoListLength: any;
   color:any="primary";
   mode:any="indeterminate";
   value:any;
-  showSpinner:boolean = false;
+  showSpinner = false;
 
   constructor(private todoService: TodoService,
     private todoHttpService: TodoHttpService,
     private appService: AppService,
     private datePipe: DatePipe,
-    private toastr: ToastrService,
+    private toastr: NotificationService,
     private cookie: CookieService,
     private router: Router,
     private socketService: SocketService,

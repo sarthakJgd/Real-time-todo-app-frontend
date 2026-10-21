@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { environment } from "../environments/environment";
-import * as io from "socket.io-client";
+import io from "socket.io-client";
 import { HttpClient } from "@angular/common/http";
 import { Observable, observable } from "rxjs";
 import { CookieService } from 'ngx-cookie-service';

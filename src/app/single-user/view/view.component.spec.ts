@@ -1,4 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewComponent } from './view.component';
 
@@ -6,17 +11,19 @@ describe('ViewComponent', () => {
   let component: ViewComponent;
   let fixture: ComponentFixture<ViewComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ViewComponent ]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [FormsModule, RouterTestingModule],
+      providers: [DatePipe, { provide: MAT_SNACK_BAR_DATA, useValue: {} }],
+      declarations: [ ViewComponent ],
+      schemas: [NO_ERRORS_SCHEMA],
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ViewComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

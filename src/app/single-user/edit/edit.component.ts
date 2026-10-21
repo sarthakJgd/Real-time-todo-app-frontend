@@ -1,36 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { TodoService } from 'src/app/todo.service';
 import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { TodoHttpService } from 'src/app/todo-http.service';
-import { ToastrService } from 'ngx-toastr';
+import { NotificationService } from 'src/app/notification.service';
 import { CookieService } from 'ngx-cookie-service';
 import { SocketService } from 'src/app/socket.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorComponent } from '../error/error.component';
 
 
 export interface iSubTask {
   taskValue: boolean;
-  name: String;
+  name: string;
 }
 
 @Component({
-  selector: 'app-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css']
+    selector: 'app-edit',
+    templateUrl: './edit.component.html',
+    styleUrls: ['./edit.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class EditComponent implements OnInit {
-  public title: String;
-  public description: String;
-  public todoDate: Date;
-  public reminderTime: Date;
+  public title: string;
+  public description: string;
+  public todoDate: string;
+  public reminderTime: string;
   public subtask: iSubTask;
   public subtaskValue = false;
   public subtasks: iSubTask[] = [];
-  public statusSelected: String;
-  public comments: String;
+  public statusSelected: string;
+  public comments: string;
   public j = 0;
   public todoList: any;
   public completedTodoList: any = [];
@@ -40,11 +42,11 @@ export class EditComponent implements OnInit {
   public authorId: any;
   public showCompletedTodoList: any = false;
   public todo: any;
-  public myTodoId: String;
+  public myTodoId: string;
   //private mode = 'create';
-  public task: String;
+  public task: string;
   editedBy: any;
-  durationInSeconds:number = 2;
+  durationInSeconds = 2;
   color:any="primary";
   mode:any="indeterminate";
   value:any;
@@ -56,7 +58,7 @@ export class EditComponent implements OnInit {
     private datePipe: DatePipe,
     private cookie: CookieService,
     private todoHttpService: TodoHttpService,
-    private toastr: ToastrService,
+    private toastr: NotificationService,
     private socketService: SocketService,
     private snackBar: MatSnackBar) { }
 
@@ -90,13 +92,13 @@ export class EditComponent implements OnInit {
             }
 
             if (this.todo.todoDate) {
-              this.todoDate = this.todo.todoDate;
+              this.todoDate = this.toDateTimeLocal(this.todo.todoDate);
             } else {
               this.todoDate = null;
             }
 
             if (this.todo.reminderTime) {
-              this.reminderTime = this.todo.reminderTime;
+              this.reminderTime = this.toDateTimeLocal(this.todo.reminderTime);
             } else {
               this.reminderTime = null;
             }
@@ -151,8 +153,8 @@ export class EditComponent implements OnInit {
     let todoData = {
       title: this.title,
       description: this.description,
-      todoDate: this.todoDate,
-      reminderTime: this.reminderTime,
+      todoDate: this.todoDate ? new Date(this.todoDate) : null,
+      reminderTime: this.reminderTime ? new Date(this.reminderTime) : null,
       subtasks: this.subtasks,
       statusSelected: this.statusSelected,
       comments: this.comments,
@@ -210,5 +212,11 @@ export class EditComponent implements OnInit {
 
   public deleteSubtask(index){
     this.subtasks.splice(index,1);
+  }
+
+  private toDateTimeLocal(value: string | Date): string {
+    const date = new Date(value);
+    const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    return localDate.toISOString().slice(0, 16);
   }
 }

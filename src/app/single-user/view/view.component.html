@@ -1,61 +1,75 @@
 
-  <app-header></app-header>
-  <div class="container" *ngIf="currentTodo" (keydown)="onKeyPress($event)">
+<app-header></app-header>
+@if (currentTodo) {
+  <div class="container" (keydown)="onKeyPress($event)">
     <div class="row">
       <div class="col-md-12">
-          <div class="float-right">
-              <button class="btn btn-outline-secondary" (click)="goBackToPreviousPage()">
-                <mat-icon>keyboard_backspace</mat-icon>
-            </button>
-              <button class="btn btn-outline-secondary" [routerLink]="['../../edit',currentTodo.todoId]">
-                  <mat-icon>edit</mat-icon>
-              </button>
-              
-              <button class="btn btn-outline-secondary" (click)="deleteTodo(currentTodo.todoId)">
-                  <mat-icon>delete</mat-icon>
-              </button>
-              
-            </div>
-        <h2 *ngIf="currentTodo.title">{{currentTodo.title}}</h2>
-        <p *ngIf="currentTodo.todoDate">
-          Due Date {{currentTodo.todoDate | date}}
-        </p>
+        <div class="float-right">
+          <button class="btn btn-outline-secondary" (click)="goBackToPreviousPage()">
+            <mat-icon>keyboard_backspace</mat-icon>
+          </button>
+          <button class="btn btn-outline-secondary" [routerLink]="['../../edit',currentTodo.todoId]">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button class="btn btn-outline-secondary" (click)="deleteTodo(currentTodo.todoId)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        @if (currentTodo.title) {
+          <h2>{{currentTodo.title}}</h2>
+        }
+        @if (currentTodo.todoDate) {
+          <p>
+            Due Date {{currentTodo.todoDate | date}}
+          </p>
+        }
         <hr>
-        <h5>Created By:</h5>
-        <p>{{currentTodo.createdBy.userName}}</p>
-        <h5>Description:</h5>
-        <p *ngIf="currentTodo.description">{{currentTodo.description}}</p>
-        <!-- <p *ngIf="currentTodo.subtasks!= undefined && currentTodo.subtasks.length>0">Subtasks : <span
-            *ngFor="let tag of currentTodo.subtasks;let first=first;let last=last">{{tag}}{{last ? '' : ', '}}</span></p>
+          <h5>Created By:</h5>
+          <p>{{currentTodo.createdBy.userName}}</p>
+          <h5>Description:</h5>
+          @if (currentTodo.description) {
+            <p>{{currentTodo.description}}</p>
+          }
+          <!-- <p *ngIf="currentTodo.subtasks!= undefined && currentTodo.subtasks.length>0">Subtasks : <span
+        *ngFor="let tag of currentTodo.subtasks;let first=first;let last=last">{{tag}}{{last ? '' : ', '}}</span></p>
         -->
         <hr>
-        <h5>Subtasks:</h5>
-        <div *ngIf="currentTodo.subtasks">
-          <ul class="form-check" *ngFor="let subtask of currentTodo.subtasks; let i =index">
-            <!-- <input class="form-check-input" type="checkbox" value="" [(ngModel)]="subtask.taskValue"
-              (click)="checkboxClicked(i);" name="subtaskValue" id="defaultCheck1"
-              [ngClass]="{strikethrough:(subtask.taskValue == true)}"> -->
-            <li>
-              <span [ngClass]="{strikethrough:(subtask.taskValue == true)}">
-                {{subtask.name}}
-              </span>
-            </li>
-          </ul>
+          <h5>Subtasks:</h5>
+          @if (currentTodo.subtasks) {
+            <div>
+              @for (subtask of currentTodo.subtasks; track subtask; let i = $index) {
+                <ul class="form-check">
+                  <!-- <input class="form-check-input" type="checkbox" value="" [(ngModel)]="subtask.taskValue"
+                  (click)="checkboxClicked(i);" name="subtaskValue" id="defaultCheck1"
+                  [ngClass]="{strikethrough:(subtask.taskValue == true)}"> -->
+                  <li>
+                    <span [ngClass]="{strikethrough:(subtask.taskValue == true)}">
+                      {{subtask.name}}
+                    </span>
+                  </li>
+                </ul>
+              }
+            </div>
+          }
+          <hr>
+            <h5>Status :</h5>
+            @if (currentTodo.statusSelected) {
+              <h6> "{{currentTodo.statusSelected}}"</h6>
+            }
+          </div>
         </div>
         <hr>
-        <h5>Status :</h5>
-        <h6 *ngIf="currentTodo.statusSelected"> "{{currentTodo.statusSelected}}"</h6>
-      </div>
-    </div>
-    <hr>
-    <button type="submit" class="btn btn-primary" style="margin-bottom: 2%;background-color:#3B53B9;color:white"
-     (click)="undoTodoState(currentTodo.todoId)">Undo previous changes</button>
-  </div>
-  <div *ngIf="!currentTodo">
-    <mat-progress-spinner 
-        class="example-margin spinner"
-        [color]="color"
-        [mode]="mode"
-        [value]="value">
-    </mat-progress-spinner>
-  </div>
+          <button type="submit" class="btn btn-primary" style="margin-bottom: 2%;background-color:#3B53B9;color:white"
+          (click)="undoTodoState(currentTodo.todoId)">Undo previous changes</button>
+        </div>
+      }
+      @if (!currentTodo) {
+        <div>
+          <mat-progress-spinner
+            class="example-margin spinner"
+            [color]="color"
+            [mode]="mode"
+            [value]="value">
+          </mat-progress-spinner>
+        </div>
+      }

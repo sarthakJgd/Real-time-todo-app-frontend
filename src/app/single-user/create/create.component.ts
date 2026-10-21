@@ -1,24 +1,27 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, ChangeDetectionStrategy } from "@angular/core";
 import { TodoService } from "src/app/todo.service";
 import { NgForm } from "@angular/forms";
 import { empty } from "rxjs";
 import { TodoHttpService } from "src/app/todo-http.service";
 import { DatePipe } from "@angular/common";
 import { HeaderComponent } from "./../header/header.component";
-import { ToastrService } from "ngx-toastr";
+import { NotificationService } from 'src/app/notification.service';
 import { CookieService } from "ngx-cookie-service";
 import { Router } from "@angular/router";
-import { PageEvent, MatSnackBar } from "@angular/material";
+import { PageEvent } from "@angular/material/paginator";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { SocketService } from "src/app/socket.service";
 import { ErrorComponent } from "../error/error.component";
 
 @Component({
-  selector: "app-create",
-  templateUrl: "./create.component.html",
-  styleUrls: ["./create.component.css"],
+    selector: "app-create",
+    templateUrl: "./create.component.html",
+    styleUrls: ["./create.component.css"],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class CreateComponent implements OnInit {
-  public title: String;
+  public title: string;
   public todoList: any;
   public completedTodoList: any;
   public showCompletedTodoList: any = false;
@@ -26,10 +29,10 @@ export class CreateComponent implements OnInit {
   private jwt: any;
   step: number;
   userId: string;
-  durationInSeconds: number = 2;
+  durationInSeconds = 2;
   editedBy: any;
-  p1: number = 1;
-  p2: number = 1;
+  p1 = 1;
+  p2 = 1;
   todoListLength: any;
   completedTodoListLength: any = 0;
   totalTodoList: any = [];
@@ -42,7 +45,7 @@ export class CreateComponent implements OnInit {
     private todoService: TodoService,
     private todoHttpService: TodoHttpService,
     private datePipe: DatePipe,
-    private toastr: ToastrService,
+    private toastr: NotificationService,
     private cookie: CookieService,
     private router: Router,
     private socketService: SocketService,

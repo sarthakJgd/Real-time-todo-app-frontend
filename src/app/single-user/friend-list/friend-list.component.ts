@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
-import { ToastrService } from 'ngx-toastr';
+import { NotificationService } from 'src/app/notification.service';
 import { SocketService } from 'src/app/socket.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorComponent } from '../error/error.component';
 
 @Component({
-  selector: 'app-friend-list',
-  templateUrl: './friend-list.component.html',
-  styleUrls: ['./friend-list.component.css']
+    selector: 'app-friend-list',
+    templateUrl: './friend-list.component.html',
+    styleUrls: ['./friend-list.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FriendListComponent implements OnInit {
   
@@ -31,15 +33,15 @@ export class FriendListComponent implements OnInit {
   receivedRequestIds: any;
   allUsersLength: number;
   currentUserId: any= [];
-  durationInSeconds:number = 2;
+  durationInSeconds = 2;
   color:any="primary";
   mode:any="indeterminate";
   value:any;
   
-  p1: number = 1;
-  p2: number = 1;
-  p3: number = 1;
-  p4: number = 1;
+  p1 = 1;
+  p2 = 1;
+  p3 = 1;
+  p4 = 1;
   allUsersTotal1: any = [];
   allUsersTotal2: any = [];
   allUsersTotal3: any = [];
@@ -48,7 +50,7 @@ export class FriendListComponent implements OnInit {
   constructor(private cookie: CookieService,
     private router: Router,
     private appService: AppService,
-    private toastr: ToastrService,
+    private toastr: NotificationService,
     private socketService: SocketService,
     private snackBar: MatSnackBar) { }
 

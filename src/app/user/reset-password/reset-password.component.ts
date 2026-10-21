@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { NotificationService } from 'src/app/notification.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
 
 @Component({
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css']
+    selector: 'app-reset-password',
+    templateUrl: './reset-password.component.html',
+    styleUrls: ['./reset-password.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ResetPasswordComponent implements OnInit {
 
@@ -16,7 +18,7 @@ export class ResetPasswordComponent implements OnInit {
   public userId: string;
   public data = {};
 
-  constructor(public toastr : ToastrService,
+  constructor(public toastr : NotificationService,
     private route: ActivatedRoute,
     private router: Router,
     private appService: AppService) { }
